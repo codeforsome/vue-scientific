@@ -102,7 +102,7 @@ export default {
         this.tip=result.msg;
         if(result.success){
           setTimeout(() => {
-          this.$router.push({name:'Main'})            
+          this.$router.push({name:'Login'})            
           }, 1200);
         }
       },function(error){

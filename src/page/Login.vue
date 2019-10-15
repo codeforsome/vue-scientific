@@ -103,7 +103,7 @@ export default {
         let result=val.data;
         this.tip=result.msg;
         if(result.success){
-          this.$store.dispatch('setToken',result.data.username);
+          this.$store.dispatch('setToken',result.data);
            setTimeout(() => {
           this.$router.push({name:'Main'})            
           }, 1200);
