@@ -11,19 +11,32 @@ Vue.use(elementUi)
 Vue.use(Vuex)
 
 router.beforeEach((to, from, next) => {
+  console.log(store.state)
   /* 路由发生变化修改页面title */
   if (to.meta.title) {
     document.title = to.meta.title
   }
-  if(to.meta.login){
-    if(store.state.token){
-      next();
-    }else{
+  if(to.path=='/login'){
+    if(getLocaltoken()){
       next({path:'/'});
+    }else{
+      next();
     }
   }
-  next();
-})
+  if(to.meta.login){
+    if(getLocaltoken()){
+      next();
+    }else{
+      next({path:'/login'});
+    }
+  }else{
+    next();
+  }
+});
+function getLocaltoken(){
+  return JSON.parse( localStorage.getItem("storeState")) &&
+  JSON.parse( localStorage.getItem("storeState")).token
+}
 const store= new Vuex.Store({
   state:{
     user:{},
@@ -50,6 +63,7 @@ const store= new Vuex.Store({
         state[item]={};
       }
       state.token='';
+      localStorage.removeItem("storeState");
     }
   },
   actions:{

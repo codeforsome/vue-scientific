@@ -35,7 +35,7 @@ export default new Router({
           component: () => import('@/page/Main')
         },
         {
-          path: '/out',
+          path: '/api/login/out',
           name: 'Out',
           meta: {
             title: '退出',
@@ -61,7 +61,6 @@ export default new Router({
       },
       component: () => import('@/page/Login')
     },
-
 
   ],
   mode: 'history',

@@ -9,12 +9,12 @@
 export default {
   name: 'App',
   created(){
- //在页面刷新时将vuex里的信息保存到sessionStoragee里
+ //在页面刷新时将vuex里的信息保存到localStorage里
   window.addEventListener("beforeunload",()=>{
-   sessionStorage.setItem("storeState",JSON.stringify(this.$store.state))
+   localStorage.setItem("storeState",JSON.stringify(this.$store.state))
   })
   
-  sessionStorage.getItem("storeState") && this.$store.replaceState(Object.assign(this.$store.state,JSON.parse(sessionStorage.getItem("storeState"))));
+  localStorage.getItem("storeState") && this.$store.replaceState(Object.assign(this.$store.state,JSON.parse(localStorage.getItem("storeState"))));
  }
 }
 </script>

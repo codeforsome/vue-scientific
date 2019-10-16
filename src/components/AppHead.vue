@@ -12,8 +12,8 @@
           <li class="item" >
             <router-link class="link" :to="{name:'My'}">我的</router-link>
           </li>
-           <li class="item" @click="loginOut()" >
-          <router-link class="link"  :to="{name:'Out'}">退出账号</router-link>
+           <li class="item" @click="userLoginOut()" >
+          <router-link class="link"   :to="{name:'Out'}">退出账号</router-link>
           </li>
         </template>
         <template v-if="!token">
@@ -29,6 +29,7 @@
   </div>
 </template>
 <script>
+import {loginOut} from './../request/api';
 export default {
   data() {
     return {};
@@ -39,8 +40,9 @@ export default {
     }
   },
   methods:{
-    loginOut(){
+    userLoginOut(){
       this.$store.dispatch('clearALL');
+      loginOut().then(val=>{},error=>{})
     }
   }
 };

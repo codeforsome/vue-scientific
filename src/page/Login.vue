@@ -104,6 +104,7 @@ export default {
         this.tip=result.msg;
         if(result.success){
           this.$store.dispatch('setToken',result.data);
+          localStorage.setItem("storeState",JSON.stringify(this.$store.state))
            setTimeout(() => {
           this.$router.push({name:'Main'})            
           }, 1200);
