@@ -1,35 +1,38 @@
 <template>
-  <div class="app-head">
-    <div class="left">
-      <h1 class="logo-title">科研管理系统</h1>
-    </div>
-    <div class="right">
-      <ul class="link-list">
-        <li class="item">
-          <router-link class="link" :to="{name:'Main'}">首页</router-link>
-        </li>
-        <template v-if="token">
-          <li class="item" >
-            <router-link class="link" :to="{name:'My'}">我的</router-link>
-          </li>
-           <li class="item" @click="userLoginOut()" >
-          <router-link class="link"   :to="{name:'Out'}">退出账号</router-link>
-          </li>
-        </template>
-        <template v-if="!token">
+  <div class="app-head-wrap">
+    <div class="app-head">
+      <div class="left">
+         <router-link class="link" :to="{name:'Main'}"><h1 class="logo-title">科研管理系统</h1></router-link>
+        
+      </div>
+      <div class="right">
+        <ul class="link-list">
           <li class="item">
-            <router-link class="link" :to="{name:'Register'}">注册</router-link>
+            <router-link class="link" :to="{name:'Main'}">首页</router-link>
           </li>
-          <li class="item">
-            <router-link class="link" :to="{name:'Login'}">登陆</router-link>
-          </li>
-        </template>
-      </ul>
+          <template v-if="token">
+            <li class="item">
+              <router-link class="link" :to="{name:'My'}">我的</router-link>
+            </li>
+            <li class="item" @click="userLoginOut()">
+              <router-link class="link" :to="{name:'Out'}">退出账号</router-link>
+            </li>
+          </template>
+          <template v-if="!token">
+            <li class="item">
+              <router-link class="link" :to="{name:'Register'}">注册</router-link>
+            </li>
+            <li class="item">
+              <router-link class="link" :to="{name:'Login'}">登陆</router-link>
+            </li>
+          </template>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
 <script>
-import {loginOut} from './../request/api';
+import { loginOut } from "./../request/api";
 export default {
   data() {
     return {};
@@ -39,46 +42,50 @@ export default {
       return this.$store.getters.token;
     }
   },
-  methods:{
-    userLoginOut(){
-      this.$store.dispatch('clearALL');
-      loginOut().then(val=>{},error=>{})
+  methods: {
+    userLoginOut() {
+      this.$store.dispatch("clearALL");
+      loginOut().then(val => {}, error => {});
     }
   }
 };
 </script>
 <style lang="less" scoped>
-.app-head {
-  display: flex;
-  justify-content: space-between;
+.app-head-wrap {
   font-size: 16px;
   color: @themeColor;
-  padding: 10px 70px;
   background-color: #fff;
-  > .left {
-    .logo-title {
-      font-size: 2.5em;
-    }
-  }
-
-  > .right {
+  .app-head {
     display: flex;
-    align-items: center;
-    > .link-list {
+    justify-content: space-between;
+    width: @blockWidth;
+    padding:15px 0;
+    margin: 0 auto;
+    > .left {
+      .logo-title {
+        font-size: 2.5em;
+        color: @themeColor;
+      }
+    }
+
+    > .right {
       display: flex;
-      > .item {
-        margin-left: 20px;
-        .link {
-          font-weight: bold;
-          color: #6f6f6f;
-          &:hover {
+      align-items: center;
+      > .link-list {
+        display: flex;
+        > .item {
+          margin-left: 20px;
+          .link {
+            font-weight: bold;
+            color: #6f6f6f;
+            &:hover {
+              color: @themeColor;
+            }
+          }
+          .active {
             color: @themeColor;
           }
-          
         }
-        .active{
-            color: @themeColor;
-          }
       }
     }
   }

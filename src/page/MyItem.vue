@@ -3,14 +3,14 @@
     <el-card class="box-card">
       <div class="thesis-wrap">
         <div class="top">
-          <span class="my-thesis">我的论文</span>
-          <router-link :to="{name:'ThesisAdd'}" >
-            <el-link icon="el-icon-s-promotion">发布新的论文</el-link>
+          <span class="my-thesis">我已经发布的科研题目</span>
+          <router-link :to="{name:'itemAdd'}" >
+            <el-link icon="el-icon-s-promotion">发布新的科研题目</el-link>
           </router-link>
         </div>
         <div class="thesis-list">
-          <template v-for="(thesis,index) in thesisList">
-            <thesis-item :thesis="thesis" :show="true" :key="index"></thesis-item>
+          <template v-for="(item,index) in items">
+            <child-item :item="item" :show="true" :key="index"></child-item>
           </template>
         </div>
       </div>
@@ -18,20 +18,20 @@
   </div>
 </template>
 <script>
-import { getThesisByParams } from "./../request/api";
-import ThesisItem from "./../components/ThesisItem";
+import { getItemByUserId } from "./../request/api";
+import ChildItem from "./../components/ChildItem";
 export default {
-  components: { ThesisItem },
+  components: { ChildItem },
   data() {
     return {
-      thesisList: []
+      items: []
     };
   },
   created() {
-    getThesisByParams("").then(
+    getItemByUserId("").then(
       val => {
         let result = val.data;
-        this.thesisList = result.data;
+        this.items = result.data;
       },
       err => {}
     );

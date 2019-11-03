@@ -17,9 +17,6 @@ export default {
 .home{
     background-color: #f1f5f5;
 }
-.main{
-    width: 1024px;
-    margin:0 auto;
-}
+
  
 </style>

@@ -45,7 +45,12 @@
                   </div>
                   <div class="button-wrap">
                     <el-button type="primary" class="button" round>
-                      查看更多
+                      <router-link
+                        class="link"
+                        :to="{name:'UserInfo',params:{
+          id:item.id}}"
+                      >查看更多</router-link>
+
                       <span class="el-icon-d-arrow-right"></span>
                     </el-button>
                   </div>
@@ -58,22 +63,41 @@
 
       <div class="mian-thesis-hot">
         <el-card class="box-card">
-          aaaaaaaaaaaaaaaaaaaaaaaaaaaa
-          aaaaaaaaaaaaaaaaaaaaaaaaaaaa
-          aaaaaaaaaaaaaaaaaaaaaaaaaaaa
-          aaaaaaaaaaaaaaaaaaaaaaaaaaaa
-          aaaaaaaaaaaaaaaaaaaaaaaaaaaa
+          <div class="hot-title">热门论文</div>
+          <div class="thesis-list">
+            <template v-for="(thesis,index) in thesisList">
+              <thesis-item :thesis="thesis" :key="index"></thesis-item>
+            </template>
+          </div>
+        </el-card>
+
+        <el-card class="box-card item-box">
+          <div class="hot-title">最新科研题目</div>
+          <div class="thesis-list">
+            <template v-for="(item,index) in itemList">
+              <child-item :item="item" :key="index"></child-item>
+            </template>
+          </div>
         </el-card>
       </div>
     </div>
   </div>
 </template>
 <script>
-import { getUserInfoByHot } from "./../request/api";
+import {
+  getUserInfoByHot,
+  getThesisByHot,
+  getItemByNew
+} from "./../request/api";
+import ThesisItem from "./../components/ThesisItem";
+import ChildItem from "./../components/ChildItem";
 export default {
+  components: { ThesisItem, ChildItem },
   data() {
     return {
-      hotUser: []
+      hotUser: [],
+      thesisList: [],
+      itemList: []
     };
   },
   created() {
@@ -84,12 +108,26 @@ export default {
       },
       err => {}
     );
+    getThesisByHot("").then(
+      val => {
+        let result = val.data;
+        this.thesisList = result.data;
+      },
+      err => {}
+    );
+    getItemByNew().then(
+      val => {
+        let result = val.data;
+        this.itemList = result.data;
+      },
+      err => {}
+    );
   }
 };
 </script>
 <style lang="less" scoped>
 .block {
-  width: 1024px;
+  width: @blockWidth;
   margin: 0 auto;
   .el-carousel__item {
     transition: all 1s;
@@ -107,17 +145,32 @@ export default {
 }
 .main-wrap {
   display: flex;
-  padding-top:20px;
+  justify-content: space-between;
+  width: @blockWidth;
+  margin: 0 auto;
+  padding-top: 20px;
 }
-.mian-thesis-hot{
-    margin-left:20px;
+.mian-thesis-hot {
+  margin-left: 20px;
+  .box-card {
+    border-radius: @borderRaduis;
+    .hot-title {
+      font-weight: bold;
+      color: @themeColor;
+    }
+  }
+   .item-box {
+    margin-top: 20px;
+  }
 }
 
 @mainShowWidth: 400px;
 .main-show {
-  width: @mainShowWidth;
   .box-card {
     font-size: @baseFontSize;
+    width: @mainShowWidth;
+    border-radius: @borderRaduis;
+
     .item {
       display: flex;
       margin-top: 20px;
@@ -171,5 +224,6 @@ export default {
       height: 150px;
     }
   }
+ 
 }
 </style>

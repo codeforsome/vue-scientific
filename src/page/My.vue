@@ -3,24 +3,23 @@
     <div class="left">
       <el-card class="box-card">
         <div slot="header" class="clearfix">
-          <span>我的信息</span>
-          <el-button
+          <span class="my-info">我的信息</span>
+          <el-link
             v-show="show"
             @click="updateUser()"
             style="float: right; padding: 3px 0"
-            type="text"
-          >修改个人信息</el-button>
-          <el-button
+            icon="el-icon-edit"
+          >编辑个人信息</el-link>
+          <el-link
             v-show="!show"
             @click="getUser()"
             style="float: right; padding: 3px 0"
-            type="text"
-          >查看个人信息</el-button>
+            icon="el-icon-view"
+          >查看个人信息</el-link>
         </div>
         <div class="text-wrap" v-show="show">
           <div class="text item">
             <img class="head-icon" width="100px" height="100px" :src="user.headIcon" alt />
-            <!-- <img class="head-icon"width="100px" height="100px" src="./../assets/img/login_bg.jpg" alt /> -->
           </div>
           <div class="text item">
             <span class="info">姓名：</span>
@@ -108,14 +107,16 @@
         </div>
       </el-card>
     </div>
-    <right></right>
+    <right v-if="user.type==0"></right>
+    <my-item v-if="user.type==1"></my-item>
   </div>
 </template>
 <script>
 import { getUserInfo, updateUserInfo } from "./../request/api";
 import Right from "./Right";
+import MyItem from "./MyItem";
 export default {
-  components: { Right },
+  components: { Right,MyItem },
   data() {
     return {
       imageUrl: "",
@@ -158,7 +159,7 @@ export default {
         {
           value: "女",
           label: "女"
-        }
+        },
       ],
       sex: "",
       educationOptions: [
@@ -279,10 +280,12 @@ export default {
 </style>
 <style lang="less" scoped>
 .my {
-  font-size: 16px;
-  padding: 5px 70px;
   display: flex;
   justify-content: space-between;
+  width: @blockWidth;
+  margin: 0 auto;
+  font-size: 16px;
+  padding-top: 20px;
   .text {
     font-size: 1em;
   }
@@ -322,7 +325,11 @@ export default {
   clear: both;
 }
 .box-card {
-  width: 480px;
-  border-radius: 20px;
+  width: 400px;
+  border-radius: @borderRaduis;
+  .my-info {
+    font-weight: bold;
+    color: @themeColor;
+  }
 }
 </style>

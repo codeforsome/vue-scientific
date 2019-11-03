@@ -11,8 +11,6 @@ Vue.use(elementUi)
 Vue.use(Vuex)
 
 router.beforeEach((to, from, next) => {
-  console.log(store.state)
-  /* 路由发生变化修改页面title */
   if (to.meta.title) {
     document.title = to.meta.title
   }
