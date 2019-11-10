@@ -85,6 +85,14 @@ export default new Router({
               component: () => import('@/components/ItemAdd'),
             },
             {
+              path: '/item/update/:id',
+              name:'itemUpdate',
+              meta: {
+                title: '编辑科研题目',
+              },
+              component: () => import('@/components/ItemEdit'),
+            },
+            {
               path: '/item/get/:id',
               name:'ItemShow',
               meta: {

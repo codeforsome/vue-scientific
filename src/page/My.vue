@@ -107,8 +107,8 @@
         </div>
       </el-card>
     </div>
-    <right v-if="user.type==0"></right>
-    <my-item v-if="user.type==1"></my-item>
+    <right v-if="userType==0"></right>
+    <my-item v-if="userType==1"></my-item>
   </div>
 </template>
 <script>
@@ -116,7 +116,7 @@ import { getUserInfo, updateUserInfo } from "./../request/api";
 import Right from "./Right";
 import MyItem from "./MyItem";
 export default {
-  components: { Right,MyItem },
+  components: { Right, MyItem },
   data() {
     return {
       imageUrl: "",
@@ -159,7 +159,7 @@ export default {
         {
           value: "女",
           label: "女"
-        },
+        }
       ],
       sex: "",
       educationOptions: [
@@ -187,7 +187,6 @@ export default {
       education: "",
       nickname: "",
       show: true,
-      user: {},
       tip: ""
     };
   },
@@ -209,18 +208,13 @@ export default {
     },
     getUser() {
       this.show = !this.show;
-      getUserInfo().then(
-        val => {
-          this.user = val.data.data;
-          for (let item in this.user) {
-            this[item] = this.user[item];
-          }
-        },
-        err => {}
-      );
     },
     updateUser() {
       this.show = !this.show;
+      this.nickname=this.user.nickname;
+      this.education=this.user.education;
+      this.sex=this.user.sex;
+      this.college=this.user.college;
       this.imageUrl = "";
       this.tip = "";
     },
@@ -230,27 +224,27 @@ export default {
       user.sex = this.sex;
       user.education = this.education;
       user.college = this.college;
+       user.headIcon= (this.imageUrl=='' ? this.user.headIcon : this.imageUrl );
       updateUserInfo(user).then(
         val => {
           let result = val.data;
           this.tip = result.msg;
           this.getUser();
+          this.$store.dispatch('setUser',user);
         },
         err => {}
       );
     }
   },
-  mounted() {
-    getUserInfo().then(
-      val => {
-        this.user = val.data.data;
-        for (let item in this.user) {
-          this[item] = this.user[item];
-        }
-      },
-      err => {}
-    );
-  }
+  computed: {
+    user() {
+      return this.$store.getters.user;
+    },
+    userType(){
+      return this.$store.getters.userType;
+    }
+  },
+  mounted() {}
 };
 </script>
 <style >

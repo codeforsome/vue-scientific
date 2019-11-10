@@ -24,7 +24,9 @@ export const getThesisByThesisId=(thesisId,params)=>http.get('/api/thesis/get/'+
 
 export const getThesisByUserId=(userId,params)=>http.get('/api/thesis/get/userid/'+userId,params);
 
-export const getThesisByHot=()=>http.get('/api/thesis/get/hot');
+export const getThesisByHot=(params)=>http.get('/api/thesis/get/hot',params);
+
+export const getThesisCount=()=>http.get('/api/thesis/get/count');
 
 export const addThesis=data=>http.post('/api/thesis/add',data);
 
@@ -42,6 +44,10 @@ export const addItem=data=>http.post('/api/item/add',data);
 export const getItemByUserId=(userId,params)=>http.get('/api/item/get/userid/'+userId,params);
 
 export const getItemByItemId=(itemId,params)=>http.get('/api/item/get/'+itemId,params);
+
+export const updateItem=data=>http.post('/api/item/update',data);
+
+export const getItemApplyByItemId=(itemId,params)=>http.get('/api/item/apply/get/'+itemId,params);
 
 export const updateItemApplyState=(data)=>http.post('/api/item/update/apply',data);
 

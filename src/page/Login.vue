@@ -43,7 +43,7 @@
   </div>
 </template>
 <script>
-import { loginVerify } from "./../request/api";
+import { loginVerify} from "./../request/api";
 export default {
   data() {
     return {
@@ -103,7 +103,10 @@ export default {
         let result=val.data;
         this.tip=result.msg;
         if(result.success){
-          this.$store.dispatch('setToken',result.data);
+            let userType=result.data.userType;
+            this.$store.dispatch('setUser',result.data.user);
+            this.$store.dispatch('setUserType',userType);
+           this.$store.dispatch('setToken',result.data.userToken);
           localStorage.setItem("storeState",JSON.stringify(this.$store.state))
            setTimeout(() => {
           this.$router.push({name:'Main'})            

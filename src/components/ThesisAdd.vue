@@ -116,6 +116,14 @@ export default {
         {
           value: "电子工程与计算机",
           label: "电子工程与计算机"
+        },
+         {
+          value: "环境",
+          label: "环境"
+        },
+         {
+          value: "政治",
+          label: "政治"
         }
       ],
       disciplineSpecialty: "",

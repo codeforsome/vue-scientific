@@ -40,10 +40,11 @@
   </div>
 </template>
 <script>
-import { updateItemApplyState ,updateItemProfessor} from "./../request/api";
+import { updateItemApplyState ,updateItemProfessor,getItemApplyByItemId} from "./../request/api";
 export default {
   data() {
     return {
+      id:'',
       applyOptions: [
         {
           value: "通过",
@@ -79,7 +80,7 @@ export default {
           apply: "",
           check: "未审查",
           file: "未提交",
-          professor:'专家1',
+          professor:'',
         },
         {
           date: "2016-05-04",
@@ -125,6 +126,13 @@ export default {
             let result=val.data;
         },err=>{})
     }
+  },
+   mounted(){
+    this.id = this.$route.params.id;
+     getItemApplyByItemId(this.id).then(val=>{
+            let result=val.data;
+            this.tableData=result.data;
+        },err=>{})
   }
 };
 </script>

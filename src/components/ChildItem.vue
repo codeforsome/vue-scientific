@@ -1,8 +1,8 @@
 <template>
   <div class="item">
     <div class="left">
-      <span class="day">{{item.date.slice(5,10)}}</span>
-      <span class="year">{{item.date.slice(0,4)}}</span>
+      <span class="day">{{item.createDate.slice(5,10)}}</span>
+      <span class="year">{{item.createDate.slice(0,4)}}</span>
     </div>
     <div class="right">
       <div class="title">
@@ -13,7 +13,7 @@
         <router-link
           v-show="show"
           style="margin-left:6px;"
-          :to="{name:'ThesisEdit',params:{
+          :to="{name:'itemUpdate',params:{
           id:item.id}}"
         >
           <el-link icon="el-icon-edit">编辑</el-link>

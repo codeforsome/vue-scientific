@@ -11,54 +11,43 @@
     </div>
     <div class="main-wrap">
       <div class="main-show">
-        <div class>
-          <el-card class="box-card">
-            <div class="head">
-              <span class="head-title">热门老师</span>
-            </div>
-            <div class="user-list">
-              <div class="item" v-for="(item,index) in hotUser" :key="index">
-                <div class="left">
-                  <img class="head-icon" src="./../assets/img/slider-2-1.png" alt />
+        <el-card class="box-card">
+          <div class="head">
+            <span class="head-title">热门老师</span>
+          </div>
+          <div class="user-list">
+            <div class="item" v-for="(item,index) in hotUser" :key="index">
+              <div class="left">
+                <img class="head-icon" :src="item.headIcon" />
+              </div>
+              <div class="right">
+                <div class="top">
+                  <span class="hot">热门</span>
+                  <span class="name">{{item.nickname}}</span>
                 </div>
-                <div class="right">
-                  <div class="top">
-                    <span class="hot">热门</span>
-                    <span class="name">{{item.nickname}}</span>
-                  </div>
-                  <div class="center">
-                    <p class="college">学院：{{item.college}}</p>
-                  </div>
-                  <div class="bottom">
-                    <span class="thesisNum num" title="论文量">
-                      <span class="el-icon-reading"></span>
-                      {{item.thesisNum}}
-                    </span>
-                    <span class="goodNum num" title="收藏量">
-                      <span class="el-icon-star-on"></span>
-                      {{item.collectNum}}
-                    </span>
-                    <span class="readNum num" title="阅读量">
-                      <span class="el-icon-view"></span>
-                      {{item.readNum}}
-                    </span>
-                  </div>
-                  <div class="button-wrap">
-                    <el-button type="primary" class="button" round>
-                      <router-link
-                        class="link"
-                        :to="{name:'UserInfo',params:{
-          id:item.id}}"
-                      >查看更多</router-link>
-
-                      <span class="el-icon-d-arrow-right"></span>
-                    </el-button>
-                  </div>
+                <div class="center">
+                  <p class="college">学院：{{item.college}}</p>
+                </div>
+                <div class="bottom">
+                  <span class="thesisNum num" title="论文量">
+                    <span class="el-icon-reading"></span>
+                    {{item.thesisNum}}
+                  </span>
+                  <span class="readNum num" title="热度量">
+                    <span class="el-icon-s-promotion"></span>
+                    {{item.hot}}
+                  </span>
+                </div>
+                <div class="button-wrap">
+                  <el-button type="primary" class="button" round>
+                    <router-link class="link" :to="{name:'UserInfo',params:{ id:item.id}}">查看更多</router-link>
+                    <span class="el-icon-d-arrow-right"></span>
+                  </el-button>
                 </div>
               </div>
             </div>
-          </el-card>
-        </div>
+          </div>
+        </el-card>
       </div>
 
       <div class="mian-thesis-hot">
@@ -68,6 +57,17 @@
             <template v-for="(thesis,index) in thesisList">
               <thesis-item :thesis="thesis" :key="index"></thesis-item>
             </template>
+            <div class="bottom-box">
+              <el-pagination
+                background
+                layout="prev, pager, next"
+                :total="thesisPagination.total"
+                :page-size="thesisPagination.pageSize"
+                @current-change="thesisCurrentChange"
+                @prev-click="thesisCurrentChange"
+                @next-click="thesisCurrentChange"
+              ></el-pagination>
+            </div>
           </div>
         </el-card>
 
@@ -77,6 +77,17 @@
             <template v-for="(item,index) in itemList">
               <child-item :item="item" :key="index"></child-item>
             </template>
+            <div class="bottom-box">
+              <el-pagination
+                background
+                layout="prev, pager, next"
+                :total="itemPagination.total"
+                :page-size="itemPagination.pageSize"
+                @current-change="itemCurrentChange"
+                @prev-click="itemCurrentChange"
+                @next-click="itemCurrentChange"
+              ></el-pagination>
+            </div>
           </div>
         </el-card>
       </div>
@@ -87,7 +98,8 @@
 import {
   getUserInfoByHot,
   getThesisByHot,
-  getItemByNew
+  getItemByNew,
+  getThesisCount
 } from "./../request/api";
 import ThesisItem from "./../components/ThesisItem";
 import ChildItem from "./../components/ChildItem";
@@ -97,8 +109,42 @@ export default {
     return {
       hotUser: [],
       thesisList: [],
-      itemList: []
+      itemList: [],
+      thesisPagination: {
+        total: 100,
+        pageSize: 5,
+        currentPage: 0
+      },
+      itemPagination: {
+        total: 100,
+        pageSize: 5,
+        currentPage: 0
+      }
     };
+  },
+  methods: {
+    thesisCurrentChange(page) {
+      this.thesisPagination.currentPage = page;
+      let obj = { currentPage: page, pageSize: this.thesisPagination.pageSize };
+      getThesisByHot(obj).then(
+        val => {
+          let result = val.data;
+          this.thesisList = result.data;
+        },
+        err => {}
+      );
+    },
+    itemCurrentChange(page) {
+      this.itemPagination.currentPage = page;
+      let obj = { currentPage: page, pageSize: this.itemPagination.pageSize };
+      getItemByNew(obj).then(
+        val => {
+          let result = val.data;
+          this.itemList = result.data;
+        },
+        err => {}
+      );
+    }
   },
   created() {
     getUserInfoByHot().then(
@@ -119,6 +165,13 @@ export default {
       val => {
         let result = val.data;
         this.itemList = result.data;
+      },
+      err => {}
+    );
+    getThesisCount().then(
+      val => {
+        let result = val.data;
+        this.thesisPagination.total = result.data;
       },
       err => {}
     );
@@ -159,7 +212,7 @@ export default {
       color: @themeColor;
     }
   }
-   .item-box {
+  .item-box {
     margin-top: 20px;
   }
 }
@@ -222,8 +275,12 @@ export default {
     .head-icon {
       width: 150px;
       height: 150px;
+      border-radius: 10px;
     }
   }
- 
+}
+.bottom-box {
+  display: flex;
+  justify-content: center;
 }
 </style>

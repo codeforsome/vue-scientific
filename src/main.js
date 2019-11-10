@@ -5,7 +5,7 @@ import elementUi from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import axios from  'axios';
 import Vuex from 'vuex'
-import './mock'
+//import './mock'
 Vue.config.productionTip = false
 Vue.use(elementUi)
 Vue.use(Vuex)
@@ -39,6 +39,7 @@ const store= new Vuex.Store({
   state:{
     user:{},
     token:'',
+    userType:0,
   },
   getters:{
     user(state){
@@ -46,11 +47,17 @@ const store= new Vuex.Store({
     },
     token(state){
       return state.token;
+    },
+    userType(state){
+      return state.userType;
     }
   },
   mutations:{
     SET_USER(state,data){
       state.user=data;
+    },
+    SET_USERTYPE(state,data){
+      state.userType=data;
     },
     SET_TOKEN(state,data){
       state.token=data;
@@ -67,6 +74,9 @@ const store= new Vuex.Store({
   actions:{
     setUser(context,user){
       context.commit('SET_USER', user);
+    },
+    setUserType(context,userType){
+      context.commit('SET_USERTYPE', userType);
     },
     setToken(context,data){
       context.commit('SET_TOKEN', data);

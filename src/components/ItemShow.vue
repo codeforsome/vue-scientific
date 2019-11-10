@@ -25,8 +25,8 @@
       </div>
 
       <div class="row">
-        <span class="name">发表时间：</span>
-        <span>{{item.date.slice(0,10)}}</span>
+        <span class="name">题目发布时间：</span>
+        <span>{{ item.createDate.slice(0,10)+' '+item.createDate.slice(11,19)}}</span>
       </div>
       <div class="row">
         <router-link class="link" :to="{name:'ItemApply',params:{
@@ -113,7 +113,7 @@ export default {
     }
     .name {
       display: inline-block;
-      width: @baseFontSize*6;
+      width: @baseFontSize*8;
       text-align: justify;
       color: @themeColor;
     }

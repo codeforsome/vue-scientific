@@ -51,7 +51,7 @@
   </div>
 </template>
 <script>
-import { addItem } from "./../request/api";
+import { updateItem, getItemByItemId } from "./../request/api";
 export default {
   data() {
     return {
@@ -114,7 +114,8 @@ export default {
       item.disciplineSpecialty = this.disciplineSpecialty;
       item.content = this.content;
       item.title = this.title;
-      addItem(item).then(
+	  item.id = this.$route.params.id;
+      updateItem(item).then(
         val => {
           let result = val.data;
           this.tip = result.msg;
@@ -127,6 +128,17 @@ export default {
         error => {}
       );
     }
+  },
+  created() {
+    getItemByItemId(this.$route.params.id).then(
+      val => {
+        let result = val.data.data;
+         this.title=result.title;
+         this.content=result.content;
+         this.disciplineSpecialty=result.disciplineSpecialty;
+      },
+      error => {}
+    );
   }
 };
 </script>
@@ -140,9 +152,8 @@ export default {
       width: 250px;
       margin-left: 10px;
     }
-    .change-wrap{
+    .change-wrap {
       margin-left: 10px;
-
     }
     .name {
       color: @themeColor;

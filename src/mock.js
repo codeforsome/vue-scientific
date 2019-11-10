@@ -3,7 +3,20 @@ Mock.mock('/api/login/verify', 'post', data => {
     return {
         msg: 'aaa',
         success: true,
-        data: "22222222222222"
+        data: {
+            userType:0,
+            userToken:33,
+            user: {
+                id: '123',
+                nickname: "蝴蝶飞",
+                college: "信息学院",
+                headIcon: './../assets/logo.png',
+                education:'教授',
+                thesisNum: '5',
+                collectNum: 10,
+                readNum: '99',
+            }
+        }
     }
 })
 
