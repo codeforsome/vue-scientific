@@ -28,9 +28,33 @@
         <span class="name">题目发布时间：</span>
         <span>{{ item.createDate.slice(0,10)+' '+item.createDate.slice(11,19)}}</span>
       </div>
-      <div class="row">
+      <div class="row" style="margin-top:6px;" v-if="userType!=0 || token!=''"
         <router-link class="link" :to="{name:'ItemApply',params:{
           id:id}}">查看项目申请人</router-link>
+      </div>
+      <div class="row" style="display: flex;margin-top:6px;">
+        <span>申请状态：</span>
+        <span v-if="applyed">已经申请</span>
+        <el-link  v-else style="float: right; padding: 3px 0" @click="showApply">我要申请</el-link>
+      </div>
+      <div class="row" v-if="apply">
+        <el-upload
+          class="upload-demo"
+          drag
+          action="/api/file/add"
+          :on-success="successFile"
+          multiple
+        >
+          <i class="el-icon-upload"></i>
+          <div class="el-upload__text">
+            将文件拖到此处，或
+            <em>点击上传</em>
+          </div>
+          <div class="el-upload__tip" slot="tip">请上传word或者pdf文档</div>
+        </el-upload>
+      </div>
+       <div class="text item" v-if="apply">
+            <el-button class="register" @click="submit()" round>提交信息</el-button>
       </div>
       <div class="row">
         <el-link @click="back()" type="primary">返回上一级</el-link>
@@ -42,10 +66,13 @@
   </div>
 </template>
 <script>
-import { getItemByItemId, getUserInfoById } from "./../request/api";
+import { getItemByItemId, getUserInfoById,addItemApply,getItemApplyStatusByItemId } from "./../request/api";
 export default {
   data() {
     return {
+      apply: false,
+      applyed:false,
+      success:false,
       item: {},
       tip: "",
       user: {},
@@ -53,12 +80,41 @@ export default {
       id: 0
     };
   },
+    computed: {
+    token() {
+      return this.$store.getters.token;
+    },
+      userType(){
+      return this.$store.getters.userType;
+    }
+  },
   methods: {
+    submit(){
+     addItemApply(this.id).then(
+          val => {
+              let result=val.data;
+             this.tip=result.msg;
+			 this.applyed=true;
+          },
+          error => {}
+        );
+    },
+    showApply(){
+	if(this.token){
+	 this.apply=!this.apply;
+	}else{
+	  this.$router.push({name:'Login'});
+	}
+     
+    },
+     successFile() {
+      this.success = true;
+    },
     back() {
       this.$router.go(-1);
     }
   },
-  mounted() {
+  created() {
     this.id = this.$route.params.id;
     getItemByItemId(this.id).then(
       val => {
@@ -72,6 +128,13 @@ export default {
       },
       error => {}
     );
+    getItemApplyStatusByItemId(this.id).then(
+          val => {
+            let result=val.data;
+             this.applyed=result.data;
+          },
+          error => {}
+        );
   }
 };
 </script>

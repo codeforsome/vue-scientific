@@ -4,7 +4,7 @@ Mock.mock('/api/login/verify', 'post', data => {
         msg: 'aaa',
         success: true,
         data: {
-            userType:0,
+            userType:3,
             userToken:33,
             user: {
                 id: '123',
@@ -429,7 +429,7 @@ Mock.mock( RegExp('/api/item/get/userid/*'), 'get', data => {
             content: '电商，淘宝电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨',
             author_id: 222,
             category: 'err',
-            date: '2019-05-03',
+            createDate: '2019-05-03',
             keyword: '电商-法大-东方-范德萨',
         },
         {
@@ -438,7 +438,7 @@ Mock.mock( RegExp('/api/item/get/userid/*'), 'get', data => {
             content: '电商，淘宝电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨',
             author_id: 222,
             category: 'err',
-            date: '2019-05-03',
+            createDate: '2019-05-03',
             keyword: '电商-法大-东方-范德萨',
         },
         {
@@ -447,7 +447,7 @@ Mock.mock( RegExp('/api/item/get/userid/*'), 'get', data => {
             content: '电商，淘宝电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨',
             author_id: 222,
             category: 'err',
-            date: '2019-05-03',
+            createDate: '2019-05-03',
             keyword: '电商-法大-东方-范德萨',
         },
         {
@@ -456,29 +456,11 @@ Mock.mock( RegExp('/api/item/get/userid/*'), 'get', data => {
             content: '电商，淘宝电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨',
             author_id: 222,
             category: 'err',
-            date: '2019-05-03',
+            createDate: '2019-05-03',
             keyword: '电商-法大-东方-范德萨',
         },
         ]
 
-    }
-})
-
-
-Mock.mock(RegExp('/api/item/get/*'), 'get', data => {
-    return {
-        msg: 'aaa',
-        success: true,
-        data: {
-            id: '4243',
-            title: '讨论中国电商',
-            content: '电商，淘宝电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨',
-            authorId: 222,
-            category: 'err',
-            date: '2019-05-03',
-            keyword: '电商-法大-东方-范德萨',
-            disciplineSpecialty: '343444',
-        }
     }
 })
 
@@ -492,7 +474,7 @@ Mock.mock( RegExp('/api/item/new'), 'get', data => {
             content: '电商，淘宝电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨',
             author_id: 222,
             category: 'err',
-            date: '2019-05-03',
+            createDate: '2019-05-03',
             keyword: '电商-法大-东方-范德萨',
         },
         {
@@ -501,7 +483,7 @@ Mock.mock( RegExp('/api/item/new'), 'get', data => {
             content: '电商，淘宝电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨',
             author_id: 222,
             category: 'err',
-            date: '2019-05-03',
+            createDate: '2019-05-03',
             keyword: '电商-法大-东方-范德萨',
         },
         {
@@ -510,7 +492,7 @@ Mock.mock( RegExp('/api/item/new'), 'get', data => {
             content: '电商，淘宝电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨',
             author_id: 222,
             category: 'err',
-            date: '2019-05-03',
+            createDate: '2019-05-03',
             keyword: '电商-法大-东方-范德萨',
         },
         {
@@ -519,10 +501,182 @@ Mock.mock( RegExp('/api/item/new'), 'get', data => {
             content: '电商，淘宝电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨',
             author_id: 222,
             category: 'err',
-            date: '2019-05-03',
+            createDate: '2019-05-03',
             keyword: '电商-法大-东方-范德萨',
         },
         ]
 
     }
 })
+
+
+Mock.mock( RegExp('/api/item/apply/get/*'), 'get', data => {
+    return {
+        msg: 'aaa',
+        success: true,
+        data: [{
+            id:1,
+          date: "2016-05-02",
+          name: "1王小虎",
+          apply: "",
+          check: "1",
+          file: "",
+          professorId:'4',
+        },
+        {
+            id:2,
+          date: "2016-05-04",
+          name: "2王小虎",
+          apply: "未通过",
+          check: "1",
+          file: "",
+          professorId:'3',
+
+        },
+        {
+            id:3,
+          date: "2016-05-01",
+          name: "3王小虎",
+          apply: "未通过",
+          check: "0",
+          file: "",
+          professorId:'2',
+
+        },
+        {
+            id:4,
+          date: "2016-05-03",
+          name: "4王小虎",
+          apply: "通过",
+          check: "1",
+          file: "/a/a/a.png",
+          professorId:'1',
+        }
+        ]
+
+    }
+})
+
+Mock.mock(RegExp('/api/item/get/*'), 'get', data => {
+    return {
+        msg: 'aaa',
+        success: true,
+        data: {
+            id: '4243',
+            title: '讨论中国电商',
+            content: '电商，淘宝电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨',
+            authorId: 222,
+            createDate: 'err',
+            date: '2019-05-03',
+            keyword: '电商-法大-东方-范德萨',
+            disciplineSpecialty: '343444',
+        }
+    }
+})
+
+
+Mock.mock(RegExp('/api/user/professor/get/all'), 'get', data => {
+    return {
+        msg: 'aaa',
+        success: true,
+        data:  [{
+            id: '1',
+            nickname: "蝴蝶飞1",
+            college: "信息学院",
+            headIcon: './../assets/logo.png',
+            thesisNum: '5',
+            collectNum: 10,
+            readNum: '99'
+        }, {
+            id: '2',
+            nickname: "蝴蝶飞2",
+            college: "信息学院",
+            headIcon: './../assets/logo.png',
+            thesisNum: '5',
+            collectNum: 10,
+            readNum: '99'
+        }
+            , {
+            id: '3',
+            nickname: "蝴蝶飞3",
+            college: "信息学院",
+            headIcon: './../assets/logo.png',
+            thesisNum: '5',
+            collectNum: 10,
+            readNum: '99'
+        },
+        {
+            id: '4',
+            nickname: "蝴蝶飞4",
+            college: "信息学院",
+            headIcon: './../assets/logo.png',
+            thesisNum: '5',
+            collectNum: 10,
+            readNum: '99'
+        }
+            , {
+            id: '5',
+            nickname: "蝴蝶飞5",
+            college: "信息学院",
+            headIcon: './../assets/logo.png',
+            thesisNum: '5',
+            collectNum: 10,
+            readNum: '99'
+        }, {
+            id: '6',
+            nickname: "蝴蝶飞6",
+            college: "信息学院",
+            headIcon: './../assets/logo.png',
+            thesisNum: '5',
+            collectNum: 10,
+            readNum: '99'
+        }],
+    }
+})
+
+Mock.mock( RegExp('/api/user/professor/get/item'), 'get', data => {
+    return {
+        msg: 'aaa',
+        success: true,
+        data: [{
+            id: '12ewe3',
+            title: '讨论中国电商',
+            content: '电商，淘宝电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨',
+            author_id: 222,
+            category: 'err',
+            createDate: '2019-05-03',
+            keyword: '电商-法大-东方-范德萨',
+        },
+        {
+            id: '12ewe3',
+            title: '讨论中国电商',
+            content: '电商，淘宝电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨',
+            author_id: 222,
+            category: 'err',
+            createDate: '2019-05-03',
+            keyword: '电商-法大-东方-范德萨',
+        },
+        {
+            id: '12ewe3',
+            title: '讨论中国电商',
+            content: '电商，淘宝电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨',
+            author_id: 222,
+            category: 'err',
+            createDate: '2019-05-03',
+            keyword: '电商-法大-东方-范德萨',
+        },
+        {
+            id: '12ewe3',
+            title: '讨论中国电商',
+            content: '电商，淘宝电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨电商，法大，东方，范德萨',
+            author_id: 222,
+            category: 'err',
+            createDate: '2019-05-03',
+            keyword: '电商-法大-东方-范德萨',
+        },
+        ]
+
+    }
+})
+
+

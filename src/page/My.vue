@@ -109,14 +109,17 @@
     </div>
     <right v-if="userType==0"></right>
     <my-item v-if="userType==1"></my-item>
+    <professor-item v-if="userType==2"></professor-item>
   </div>
 </template>
 <script>
 import { getUserInfo, updateUserInfo } from "./../request/api";
 import Right from "./Right";
 import MyItem from "./MyItem";
+import   ProfessorItem from "../components/ProfessorItem";
+
 export default {
-  components: { Right, MyItem },
+  components: { Right, MyItem ,ProfessorItem},
   data() {
     return {
       imageUrl: "",

@@ -99,7 +99,8 @@ import {
   getUserInfoByHot,
   getThesisByHot,
   getItemByNew,
-  getThesisCount
+  getThesisCount,
+  getItemCount
 } from "./../request/api";
 import ThesisItem from "./../components/ThesisItem";
 import ChildItem from "./../components/ChildItem";
@@ -111,13 +112,13 @@ export default {
       thesisList: [],
       itemList: [],
       thesisPagination: {
-        total: 100,
-        pageSize: 5,
+        total: 10,
+        pageSize: 4,
         currentPage: 0
       },
       itemPagination: {
-        total: 100,
-        pageSize: 5,
+        total: 10,
+        pageSize: 4,
         currentPage: 0
       }
     };
@@ -172,6 +173,13 @@ export default {
       val => {
         let result = val.data;
         this.thesisPagination.total = result.data;
+      },
+      err => {}
+    );
+    getItemCount().then(
+      val => {
+        let result = val.data;
+        this.itemPagination.total = result.data;
       },
       err => {}
     );

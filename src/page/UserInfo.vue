@@ -24,14 +24,17 @@
       </div>
       <div class="thesis-list">
         <div class="title">他的论文</div>
-        <template v-for="(thesis,index) in thesisList">
-          <thesis-item :thesis="thesis" :key="index"></thesis-item>
+        <div  v-if="thesisList.length==0" style="margin-top:20px;">这个作者还没有发布论文。</div>         
+        <template   v-else  v-for="(thesis,index) in thesisList">
+          <thesis-item  :thesis="thesis" :key="index"></thesis-item>
         </template>
       </div>
-      <div class="thesis-list">
-        <div class="title">他的题目发布</div>
+      <div class="thesis-list" style="margin-top:20px;">
+        <div class="title">他的科研题目发布</div>
         <div class="thesis-list">
-          <template v-for="(item,index) in itemList">
+          <div v-if="itemList.length==0" style="margin-top:20px;">这个作者还没有发布科研题目。</div>
+
+          <template  v-else   v-for="(item,index) in itemList"  >
             <child-item :item="item" :key="index"></child-item>
           </template>
         </div>
@@ -40,15 +43,20 @@
   </div>
 </template>
 <script>
-import { getUserInfoById, getThesisByUserId,getItemByUserId } from "./../request/api";
+import {
+  getUserInfoById,
+  getThesisByUserId,
+  getItemByUserId
+} from "./../request/api";
 import ThesisItem from "./../components/ThesisItem";
+import ChildItem from "./../components/ChildItem";
 export default {
-  components: { ThesisItem },
+  components: { ThesisItem ,ChildItem},
   data() {
     return {
       user: {},
       thesisList: [],
-      itemList:[],
+      itemList: []
     };
   },
   methods: {
@@ -56,7 +64,7 @@ export default {
       this.$router.go(-1);
     }
   },
-  mounted() {
+  created() {
     getUserInfoById(this.$route.params.id).then(
       val => {
         this.user = val.data.data;
@@ -74,9 +82,11 @@ export default {
       val => {
         let result = val.data;
         this.itemList = result.data;
+		console.log(this.itemList)
       },
       err => {}
     );
+    
   }
 };
 </script>

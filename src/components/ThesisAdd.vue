@@ -59,7 +59,7 @@
         <el-upload
           class="upload-demo"
           drag
-          action="/api/file/add"
+          action="/api/file/apply/add"
           :on-success="successFile"
           multiple
         >

@@ -8,7 +8,7 @@
       <div class="title">
         <span>
           <router-link :to="{name:'ItemShow',params:{
-          id:item.id}}">{{item.title}}</router-link>
+          id:item.id}}">{{item.title.slice(0,18)+ (item.title.length>18 ? '...' : '' )}}</router-link>
         </span>
         <router-link
           v-show="show"
@@ -29,7 +29,6 @@ export default {
   props: {
     item: {
       type: Object,
-      required: true
     },
     show: {
       type: Boolean,
