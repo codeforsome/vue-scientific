@@ -29,10 +29,7 @@
                   <p class="college">学院：{{item.college}}</p>
                 </div>
                 <div class="bottom">
-                  <span class="thesisNum num" title="论文量">
-                    <span class="el-icon-reading"></span>
-                    {{item.thesisNum}}
-                  </span>
+                 
                   <span class="readNum num" title="热度量">
                     <span class="el-icon-s-promotion"></span>
                     {{item.hot}}
@@ -162,13 +159,6 @@ export default {
       },
       err => {}
     );
-    getItemByNew().then(
-      val => {
-        let result = val.data;
-        this.itemList = result.data;
-      },
-      err => {}
-    );
     getThesisCount().then(
       val => {
         let result = val.data;
@@ -176,13 +166,24 @@ export default {
       },
       err => {}
     );
-    getItemCount().then(
+	 setTimeout(() => { //慢一步加载该内容
+      getItemByNew().then(
+      val => {
+        let result = val.data;
+        this.itemList = result.data;
+      },
+      err => {}
+    );
+     getItemCount().then(
       val => {
         let result = val.data;
         this.itemPagination.total = result.data;
       },
       err => {}
     );
+   }, 1300);
+   
+   
   }
 };
 </script>

@@ -15,7 +15,46 @@ export default new Router({
       children: [
         {
           path: '',
-          redirect: '/main'
+          redirect: '/main',
+        },
+        {
+          path: '/main',
+          name: 'Main',
+          meta: {
+            title: '主页',
+            keepAlive: true
+          },
+          component: () => import('@/page/Main')
+        },
+        {
+          path: '/system',
+          meta: {
+            title: '管理页',
+            login: true,
+          },
+          component: () => import('@/page/admin/System'),
+          children: [
+            {
+              path: '',
+              redirect: '/system/user',
+            },
+            {
+              path: '/system/user',
+              name: 'User',
+              meta: {
+                title: '用户管理',
+              },
+             component: () => import('@/page/admin/User'),
+            },
+            {
+              path: '/system/item',
+              name: 'Item',
+              meta: {
+                title: '科研题目管理',
+              },
+             component: () => import('@/page/admin/Item'),
+            },
+          ]
         },
         {
           path: '/my',
@@ -40,10 +79,10 @@ export default new Router({
             title: '',
           },
           component: () => import('@/page/Thesis'),
-          children:[
+          children: [
             {
               path: '/thesis/add',
-              name:'ThesisAdd',
+              name: 'ThesisAdd',
               meta: {
                 title: '发布论文',
                 login: true,
@@ -52,7 +91,7 @@ export default new Router({
             },
             {
               path: '/thesis/edit/:id',
-              name:'ThesisEdit',
+              name: 'ThesisEdit',
               meta: {
                 title: '编辑论文',
                 login: true,
@@ -61,7 +100,7 @@ export default new Router({
             },
             {
               path: '/thesis/get/:id',
-              name:'ThesisShow',
+              name: 'ThesisShow',
               meta: {
                 title: '查看论文',
               },
@@ -70,15 +109,15 @@ export default new Router({
           ]
         },
         {
-          path:'/item',
-          meta:{
-            title:''
+          path: '/item',
+          meta: {
+            title: ''
           },
           component: () => import('@/page/Item'),
-          children:[
+          children: [
             {
               path: '/item/add',
-              name:'itemAdd',
+              name: 'itemAdd',
               meta: {
                 title: '发布新科研题目',
               },
@@ -86,7 +125,7 @@ export default new Router({
             },
             {
               path: '/item/update/:id',
-              name:'itemUpdate',
+              name: 'itemUpdate',
               meta: {
                 title: '编辑科研题目',
               },
@@ -94,7 +133,7 @@ export default new Router({
             },
             {
               path: '/item/get/:id',
-              name:'ItemShow',
+              name: 'ItemShow',
               meta: {
                 title: '查看科研题目',
               },
@@ -102,21 +141,13 @@ export default new Router({
             },
             {
               path: '/item/apply/get/:id',
-              name:'ItemApply',
+              name: 'ItemApply',
               meta: {
                 title: '申请人',
               },
               component: () => import('@/components/ItemApply'),
             },
           ]
-        },
-        {
-          path: '/main',
-          name: 'Main',
-          meta: {
-            title: '主页'
-          },
-          component: () => import('@/page/Main')
         },
         {
           path: '/api/login/out',

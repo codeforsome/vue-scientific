@@ -28,11 +28,11 @@
         <span class="name">题目发布时间：</span>
         <span>{{ item.createDate.slice(0,10)+' '+item.createDate.slice(11,19)}}</span>
       </div>
-      <div class="row" style="margin-top:6px;" v-if="userType!=0 || token!=''"
+      <div class="row" style="margin-top:20px;" v-if=" (userType==1 ||  userType==2 )">
         <router-link class="link" :to="{name:'ItemApply',params:{
           id:id}}">查看项目申请人</router-link>
       </div>
-      <div class="row" style="display: flex;margin-top:6px;">
+      <div class="row" style="display: flex;margin-top:20px;">
         <span>申请状态：</span>
         <span v-if="applyed">已经申请</span>
         <el-link  v-else style="float: right; padding: 3px 0" @click="showApply">我要申请</el-link>

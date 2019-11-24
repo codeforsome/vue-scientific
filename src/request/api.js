@@ -1,10 +1,10 @@
 import http from './http';
-
+//  get操作中 params 是对象 {paramsName:paramsValue}
 export const sendLoginInfo=data=>http.post('/api/register/add',data);
 
 export const loginVerify=data=>http.post('/api/login/verify',data);
 
-//用户
+//--------------------------用户操作---------------------
 
 export const getUserInfo=data=>http.get('/api/user/get',data);
 
@@ -17,7 +17,7 @@ export const loginOut=data=>http.get('/api/login/out',data);
 export const updateUserInfo=data=>http.post('/api/user/update',data);
 
 
-// 论文
+// -----------------------论文操作-------------------
 export const getThesisByParams=data=>http.get('/api/thesis/get',data);
 
 export const getThesisByThesisId=(thesisId,params)=>http.get('/api/thesis/get/'+thesisId,params);
@@ -38,7 +38,7 @@ export const collectThesis=data=>http.get('/api/thesis/collect',data);
 
 export const cancelCollectThesis=data=>http.get('/api/thesis/cancel',data);
 
-// 科研项目操作
+// ----------------------科研项目操作-----------------------
 export const addItem=data=>http.post('/api/item/add',data);
 
 export const addItemApply=id=>http.get('/api/item/apply/add/'+id);
@@ -62,7 +62,7 @@ export const getItemCount=()=>http.get('/api/item/get/count');
 
 export const updateItemCheckState=(data)=>http.post('/api/item/update/check',data);
 
-//科研人员的操作
+//----------------------科研人员的操作-----------------------------
 
 //指定项目的专家
 export const updateItemProfessor=(data)=>http.post('/api/item/scientific/update/professor',data);
@@ -81,6 +81,28 @@ export const getProfessorItem=()=>http.get('/api/item/professor/get');
 
 //确定老师上传的资料是否符合该科研题目的要求
 export const updateItemProfessorCheck=(data)=>http.post('/api/item/professor/update/check',data);
+
+//-----------------------管理员操作-------------------------
+
+
+export const getAllUserInfo=(params)=>http.get('/api/admin/user/get',params);
+
+export const getUserCount=()=>http.get('/api/admin/user/get/count');
+
+export const getAllItem=(params)=>http.get('/api/admin/item/get/all',params);
+
+
+export const updataUserLoginStatus=(data)=>http.post('/api/admin/user/updata/status',data);
+
+export const updataUserType=(data)=>http.post('/api/admin/user/updata/type',data);
+
+export const resetUserPassword=(username)=>http.get('/api/admin/user/updata/password',username);
+
+export const deleteUserById=(id)=>http.get('/api/admin/user/delete',id);
+
+export const deleteItemById=(id)=>http.get('/api/admin/item/delete',id);
+
+
 
 
 

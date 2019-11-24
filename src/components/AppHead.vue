@@ -14,6 +14,9 @@
             <li class="item">
               <router-link class="link" :to="{name:'My'}">我的</router-link>
             </li>
+             <li class="item" v-if="userType==3">
+              <router-link class="link" to="/system">管理系统</router-link>
+            </li>
             <li class="item" @click="userLoginOut()">
               <router-link class="link" :to="{name:'Out'}">退出账号</router-link>
             </li>
@@ -40,6 +43,9 @@ export default {
   computed: {
     token() {
       return this.$store.getters.token;
+    },
+     userType(){
+      return this.$store.getters.userType;
     }
   },
   methods: {

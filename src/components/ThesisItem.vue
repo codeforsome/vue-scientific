@@ -27,9 +27,6 @@
         </template>
       </div>
       <div class="bottom">
-        <span class="collectNum num" title="收藏量">
-          <span class="el-icon-star-on">{{thesis.collectNum}}</span>
-        </span>
         <span class="readNum num" title="阅读量">
           <span class="el-icon-view">{{thesis.readNum}}</span>
         </span>

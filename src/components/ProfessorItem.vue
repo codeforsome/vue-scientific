@@ -26,7 +26,7 @@
         <div class="apply-list" v-if="!isShow">
           <div class="thesis-list">
             <div class="item">
-              <div class="right">
+              <div class="right" style="cursor: default;">
                 <div class="title">
                   <span>项目题目：{{items[currentIndex].title}}</span>
                 </div>
@@ -37,8 +37,21 @@
           </div>
 
           <el-table :data="tableData" style="width: 100%">
-            <el-table-column prop="date" label="申请日期" width="160"></el-table-column>
-            <el-table-column prop="name" label="姓名" width="140"></el-table-column>
+            <el-table-column  label="申请日期" width="160">
+			    <template
+            slot-scope="scope"
+          >{{tableData[scope.$index].date.slice(0,4)}}-{{tableData[scope.$index].date.slice(5,10)}}</template>
+			</el-table-column>
+            <el-table-column  label="姓名" width="140">
+			 <template slot-scope="scope">
+            <router-link
+              class="link"
+              :to="{name:'UserInfo',params:{
+          id:userList[scope.$index].id}}"
+            >{{userList[scope.$index].nickname}}</router-link>
+          </template>
+			
+			</el-table-column>
             <el-table-column label="资料提交">
               <template slot-scope="scope">
                 <div v-if="tableData[scope.$index].file">
@@ -70,7 +83,7 @@
   </div>
 </template>
 <script>
-import { getProfessorItem, getItemApplyByItemId,updateItemProfessorCheck } from "./../request/api";
+import { getProfessorItem, getItemApplyByItemId,updateItemProfessorCheck,getUserInfoById } from "./../request/api";
 export default {
   data() {
     return {
@@ -79,6 +92,7 @@ export default {
       currentIndex: 0,
       tableData: [],
       checkArray: [],
+	    userList: [],
       checkOptions: [
         {
           value: "通过",
@@ -111,8 +125,14 @@ export default {
         val => {
           let result = val.data;
           this.tableData = result.data;
-          this.tableData.forEach(item => {
+          this.tableData.forEach((item,index)=> {
             this.checkArray.push(item.check == 0 ? " 未通过" : "通过");
+			 getUserInfoById(this.tableData[index].applyId).then(
+            val => {
+              this.userList.push(val.data.data);
+            },
+            error => {}
+          );
           });
         },
         err => {}

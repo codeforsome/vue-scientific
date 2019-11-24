@@ -47,7 +47,7 @@
         <span class="name">学科专业：</span>
         <div class="change-wrap">{{thesis.disciplineSpecialty}}</div>
       </div>
-      <div class="row">
+      <div class="row" style="margin-top:10px" >
         <span class="name">论文文件：</span>
         <a :href="thesis.filePath">点击下载论文</a>
       </div>
