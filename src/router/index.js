@@ -27,6 +27,14 @@ export default new Router({
           component: () => import('@/page/Main')
         },
         {
+          path: '/search/:type/:search',
+          name: 'Search',
+          meta: {
+            title: '搜索',
+          },
+          component: () => import('@/page/SearchResult')
+        },
+        {
           path: '/system',
           meta: {
             title: '管理页',
@@ -47,6 +55,14 @@ export default new Router({
              component: () => import('@/page/admin/User'),
             },
             {
+              path: '/system/user/search/:type/:search',
+              name: 'UserSearch',
+              meta: {
+                title: '用户搜索',
+              },
+             component: () => import('@/page/admin/User'),
+            },
+            {
               path: '/system/item',
               name: 'Item',
               meta: {
@@ -54,6 +70,31 @@ export default new Router({
               },
              component: () => import('@/page/admin/Item'),
             },
+            {
+              path: '/system/item/search/:type/:search',
+              name: 'ItemSearch',
+              meta: {
+                title: '科研题目搜索',
+              },
+             component: () => import('@/page/admin/Item'),
+            },
+            {
+              path: '/system/thesis',
+              name: 'Thesis',
+              meta: {
+                title: '论文管理',
+              },
+             component: () => import('@/page/admin/Thesis'),
+            },
+            {
+              path: '/system/thesis/search/:type/:search',
+              name: 'ThesisSearch',
+              meta: {
+                title: '论文搜索',
+              },
+             component: () => import('@/page/admin/Thesis'),
+            },
+  
           ]
         },
         {
@@ -158,6 +199,7 @@ export default new Router({
           },
           component: () => import('@/page/Main')
         }
+        
       ]
     },
     {

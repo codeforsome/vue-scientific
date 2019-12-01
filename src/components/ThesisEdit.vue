@@ -85,7 +85,7 @@
   </div>
 </template>
 <script>
-import { getThesisByParams, updateThesis } from "./../request/api";
+import { getThesisByThesisId, updateThesis } from "./../request/api";
 export default {
   data() {
     return {
@@ -187,7 +187,7 @@ export default {
   },
   created() {
     let id = this.$route.params.id;
-    getThesisByParams({ id: id }).then(
+    getThesisByThesisId(id).then(
       val => {
         let resultData = val.data.data;
         this.keyword = resultData.keyword.split("-");

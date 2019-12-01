@@ -4,7 +4,7 @@ Mock.mock('/api/login/verify', 'post', data => {
         msg: 'aaa',
         success: true,
         data: {
-            userType:3,
+            userType:1,
             userToken:33,
             user: {
                 id: '123',
@@ -635,8 +635,6 @@ Mock.mock( RegExp('/api/admin/item/get/all'), 'get', data => {
 
     }
 })
-
-
 
 Mock.mock( RegExp('/api/item/apply/get/*'), 'get', data => {
     return {

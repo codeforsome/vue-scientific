@@ -10,21 +10,37 @@
         </div>
         <div class="thesis-list">
           <template v-for="(item,index) in items">
+             <div class="wrap">
             <child-item :item="item" :show="true" :key="index"></child-item>
+            <div style="height:30px;"> 
+              <el-button size="mini" type="danger" @click="handleDelete(index)">删除</el-button>
+            </div>
+            </div>
+          
           </template>
         </div>
       </div>
     </el-card>
+    <el-dialog title="提示" :visible.sync="deleteDialogVisible" width="30%">
+      <span>{{deleteTip}}</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="deleteDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="deletOk()">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
-import { getItemByUserId } from "./../request/api";
+import { getItemByUserId,userDeleteItemById } from "./../request/api";
 import ChildItem from "./../components/ChildItem";
 export default {
   components: { ChildItem },
   data() {
     return {
-      items: []
+      items: [],
+       deleteIndex:'',
+      deleteDialogVisible:false,
+      deleteTip:'',
     };
   },
   created() {
@@ -35,6 +51,19 @@ export default {
       },
       err => {}
     );
+  },
+  methods:{
+    handleDelete(index){
+      this.deleteTip='是否删除该题目';
+      this.deleteDialogVisible=true;
+      this.deleteIndex=index;
+    },
+    deletOk(){
+       this.deleteDialogVisible=false;
+       userDeleteItemById({id:this.items[this.deleteIndex].id}).then(val=>{
+         window.location.href=window.location.href;
+       },err=>{})
+    }
   }
 };
 </script>
@@ -62,5 +91,10 @@ export default {
       color: @themeColor;
     }
   }
+}
+.wrap{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 </style>

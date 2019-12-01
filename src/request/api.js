@@ -91,6 +91,8 @@ export const getUserCount=()=>http.get('/api/admin/user/get/count');
 
 export const getAllItem=(params)=>http.get('/api/admin/item/get/all',params);
 
+export const getAllThesis=(params)=>http.get('/api/admin/thesis/get/all',params);
+
 
 export const updataUserLoginStatus=(data)=>http.post('/api/admin/user/updata/status',data);
 
@@ -98,9 +100,19 @@ export const updataUserType=(data)=>http.post('/api/admin/user/updata/type',data
 
 export const resetUserPassword=(username)=>http.get('/api/admin/user/updata/password',username);
 
+export const searchUser=(params)=>http.get('/api/user/search',params);
+export const searchItem=(params)=>http.get('/api/item/search',params);
+export const searchThesis=(params)=>http.get('/api/thesis/search',params);
+
 export const deleteUserById=(id)=>http.get('/api/admin/user/delete',id);
 
 export const deleteItemById=(id)=>http.get('/api/admin/item/delete',id);
+
+export const userDeleteItemById=(id)=>http.get('/api/item/delete',id);
+
+export const deleteThesisById=(id)=>http.get('/api/admin/thesis/delete',id);
+
+export const userDeleteThesisById=(id)=>http.get('/api/thesis/delete',id);
 
 
 

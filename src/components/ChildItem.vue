@@ -19,7 +19,7 @@
           <el-link icon="el-icon-edit">编辑</el-link>
         </router-link>
       </div>
-      <div class="abstract">科研要求{{item.content.slice(0,50)+'...'}}</div>
+      <div class="abstract">{{item.content.slice(0,18)+'...'}}</div>
       <el-divider></el-divider>
     </div>
   </div>

@@ -74,19 +74,15 @@
         ></el-pagination>
       </div>
     </div>
-    <el-dialog title="提示" :visible.sync="dialogVisible" width="30%" :before-close="handleClose">
+  
+    <el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
       <span>{{passwordTip}}</span>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="resetPassword()">确 定</el-button>
       </span>
     </el-dialog>
-    <el-dialog
-      title="提示"
-      :visible.sync="deleteDialogVisible"
-      width="30%"
-      :before-close="handleClose"
-    >
+    <el-dialog title="提示" :visible.sync="deleteDialogVisible" width="30%">
       <span>{{deleteTip}}</span>
       <span slot="footer" class="dialog-footer">
         <el-button @click="deleteDialogVisible = false">取 消</el-button>
@@ -102,7 +98,8 @@ import {
   updataUserLoginStatus,
   resetUserPassword,
   updataUserType,
-  deleteUserById
+  deleteUserById,
+  searchUser
 } from ".././../request/api";
 export default {
   data() {
@@ -111,7 +108,7 @@ export default {
       deleteDialogVisible: false,
       userPagination: {
         total: 10,
-        pageSize: 4,
+        pageSize: 8,
         currentPage: 0
       },
       passwordTip: "",
@@ -147,6 +144,31 @@ export default {
     };
   },
   created() {
+    let type = this.$route.params.type;
+    let search = this.$route.params.search;
+    if (type == 1 && search != "") {
+      this.tableData =[];
+	  this.applyArray=[];
+	   this.userTypeArray=[];
+      searchUser({type,search}).then(
+        val => {
+          let result = val.data;
+          this.userPagination.total = result.data.length;
+          this.userPagination.pageSize=result.data.length;
+           this.tableData = result.data;
+		   for (let i = 0; i < this.tableData.length; i++) {
+          this.applyArray.push(this.tableData[i].status == 0 ? "禁用" : "正常");
+        }
+        for (let i = 0; i < this.tableData.length; i++) {
+          this.userTypeArray.push(
+            this.userTypeOptions[this.tableData[i].type].value
+          );
+        }
+        },
+        err => {}
+      );
+      return;
+    }
     getUserCount().then(
       val => {
         let result = val.data;
@@ -169,6 +191,9 @@ export default {
       },
       err => {}
     );
+  },
+  mounted(){
+ 
   },
   methods: {
     choice(index) {
@@ -199,9 +224,13 @@ export default {
       );
     },
     deletUser() {
-      deleteUserById({ id: this.tableData[this.choiceCurrent].id }).then(
+      deleteUserById({
+        id: this.tableData[this.choiceCurrent].id,
+        username: this.tableData[this.choiceCurrent].username
+      }).then(
         val => {
           this.deleteTip = "删除用户成功";
+		  window.location.href='/system/user';
           setTimeout(() => {
             this.deleteDialogVisible = false;
           }, 1000);
@@ -236,13 +265,6 @@ export default {
         },
         err => {}
       );
-    },
-    handleClose(done) {
-      this.$confirm("确认关闭？")
-        .then(_ => {
-          done();
-        })
-        .catch(_ => {});
     },
     userCurrentChange(page) {
       this.userPagination.currentPage = page;

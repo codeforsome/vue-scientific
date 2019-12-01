@@ -5,7 +5,7 @@ import elementUi from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import axios from  'axios';
 import Vuex from 'vuex'
-import './mock'
+//import './mock'
 Vue.config.productionTip = false
 Vue.use(elementUi)
 Vue.use(Vuex)

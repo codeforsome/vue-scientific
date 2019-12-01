@@ -54,8 +54,8 @@
 			</el-table-column>
             <el-table-column label="资料提交">
               <template slot-scope="scope">
-                <div v-if="tableData[scope.$index].file">
-                  <a :href="tableData[scope.$index].file">下载资料查看</a>
+                <div v-if="tableData[scope.$index].filePath">
+                  <a :href="tableData[scope.$index].filePath">下载资料查看</a>
                 </div>
                 <div v-else>没有提交</div>
               </template>
@@ -107,7 +107,7 @@ export default {
   },
   methods: {
     changeApply(index, row) {
-        row.check= this.checkArray[index]=='通过' ? 1 : 0  ;
+        row.checkStatus= this.checkArray[index]=='通过' ? 1 : 0  ;
       updateItemProfessorCheck(row).then(
         val => {
           let result = val.data;
@@ -126,7 +126,7 @@ export default {
           let result = val.data;
           this.tableData = result.data;
           this.tableData.forEach((item,index)=> {
-            this.checkArray.push(item.check == 0 ? " 未通过" : "通过");
+            this.checkArray.push(item.checkStatus == 0 ? " 未通过" : "通过");
 			 getUserInfoById(this.tableData[index].applyId).then(
             val => {
               this.userList.push(val.data.data);
