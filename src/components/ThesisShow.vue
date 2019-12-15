@@ -49,7 +49,7 @@
       </div>
       <div class="row" style="margin-top:10px" >
         <span class="name">论文文件：</span>
-        <a :href="thesis.filePath">点击下载论文</a>
+        <a :href="thesis.filePath"  @click="isLogin" >点击下载论文</a>
       </div>
       <div class="row">
         <span class="name">发表时间：</span>
@@ -82,6 +82,12 @@ export default {
     };
   },
   methods: {
+     isLogin() {
+      if (this.token) {
+      } else {
+        this.$router.push({ name: "Login" });
+      }
+    },
     back() {
       this.$router.go(-1);
     },
@@ -93,6 +99,15 @@ export default {
       } else {
         cancelCollectThesis({ id: id }).then(val => {}, error => {});
       }
+    }
+  },
+  computed: {
+  
+    token() {
+      return this.$store.getters.token;
+    },
+    userType() {
+      return this.$store.getters.userType;
     }
   },
   mounted() {

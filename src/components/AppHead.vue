@@ -8,7 +8,7 @@
       </div>
       <div class="right">
         <ul class="link-list">
-          <li class="item">
+          <li class="item" v-if="userType!=3">
             <el-input placeholder="搜索本站内容" v-model="inputVal" class="input-with-select">
               <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
             </el-input>
@@ -58,21 +58,20 @@ export default {
       return this.$store.getters.userType;
     }
   },
-   mounted(){
-      this.inputVal= this.$route.params.search;
-    },
+  mounted() {
+    this.inputVal = this.$route.params.search;
+  },
   methods: {
     search() {
-          this.$router.push({
-            name: "Search",
-            params: { type:0, search: this.inputVal }
-          });
+      this.$router.push({
+        name: "Search",
+        params: { type: 0, search: this.inputVal }
+      });
     },
     userLoginOut() {
       this.$store.dispatch("clearALL");
       loginOut().then(val => {}, error => {});
-    },
-   
+    }
   }
 };
 </script>

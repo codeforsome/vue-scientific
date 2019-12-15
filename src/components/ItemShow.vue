@@ -32,10 +32,18 @@
         <router-link class="link" :to="{name:'ItemApply',params:{
           id:id}}">查看项目申请人</router-link>
       </div>
-      <div class="row" style="display: flex;margin-top:20px;">
+      <div class="row" v-show="isShow" style="display: flex;margin-top:20px;">
         <span>申请状态：</span>
-        <span v-if="applyed">已经申请</span>
-        <el-link  v-else style="float: right; padding: 3px 0" @click="showApply">我要申请</el-link>
+        <div v-if="applyed" class="block">
+          <el-timeline :reverse="reverse">
+            <el-timeline-item
+              v-for="(activity, index) in activities"
+              :key="index"
+              :timestamp="activity.timestamp"
+            >{{activity.content}}</el-timeline-item>
+          </el-timeline>
+        </div>
+        <el-link v-else style="float: right; padding: 3px 0" @click="showApply">我要申请</el-link>
       </div>
       <div class="row" v-if="apply">
         <el-upload
@@ -53,8 +61,8 @@
           <div class="el-upload__tip" slot="tip">请上传word或者pdf文档</div>
         </el-upload>
       </div>
-       <div class="text item" v-if="apply">
-            <el-button class="register" @click="submit()" round>提交信息</el-button>
+      <div class="text item" v-if="apply">
+        <el-button class="register" @click="submit()" round>提交信息</el-button>
       </div>
       <div class="row">
         <el-link @click="back()" type="primary">返回上一级</el-link>
@@ -66,13 +74,38 @@
   </div>
 </template>
 <script>
-import { getItemByItemId, getUserInfoById,addItemApply,getItemApplyStatusByItemId } from "./../request/api";
+import {
+  getItemByItemId,
+  getUserInfoById,
+  addItemApply,
+  getItemApply,
+  getItemApplyStatusByItemId
+} from "./../request/api";
 export default {
   data() {
     return {
+      activities: [
+        {
+          content: "提交成功",
+          timestamp: "无"
+        },
+        {
+          content: "未审核",
+          timestamp: "无"
+        },
+        {
+          content: "未分配专家",
+          timestamp: "无"
+        },
+        {
+          content: "专家未审核",
+          timestamp: "无"
+        }
+      ],
       apply: false,
-      applyed:false,
-      success:false,
+      applyed: false,
+      success: false,
+      isShow: true,
       item: {},
       tip: "",
       user: {},
@@ -80,34 +113,36 @@ export default {
       id: 0
     };
   },
-    computed: {
+  computed: {
     token() {
       return this.$store.getters.token;
     },
-      userType(){
+    userType() {
       return this.$store.getters.userType;
+    },
+    StoreUser() {
+      return this.$store.getters.user;
     }
   },
   methods: {
-    submit(){
-     addItemApply(this.id).then(
-          val => {
-              let result=val.data;
-             this.tip=result.msg;
-			 this.applyed=true;
-          },
-          error => {}
-        );
+    submit() {
+      addItemApply(this.id).then(
+        val => {
+          let result = val.data;
+          this.tip = result.msg;
+          this.applyed = true;
+        },
+        error => {}
+      );
     },
-    showApply(){
-	if(this.token){
-	 this.apply=!this.apply;
-	}else{
-	  this.$router.push({name:'Login'});
-	}
-     
+    showApply() {
+      if (this.token) {
+        this.apply = !this.apply;
+      } else {
+        this.$router.push({ name: "Login" });
+      }
     },
-     successFile() {
+    successFile() {
       this.success = true;
     },
     back() {
@@ -115,13 +150,49 @@ export default {
     }
   },
   created() {
+    console.log(this.StoreUser);
     this.id = this.$route.params.id;
+    if (this.token) {
+      getItemApply(this.id).then(
+        val => {
+          let apply = val.data.data;
+          this.activities[0].timestamp = apply.date.slice(0, 10);
+          if (apply.apply != null) {
+            this.activities[1].content =
+              apply.apply == 1 ? "通过审核" : "审核不通过";
+            this.activities[1].timestamp = apply.applyDate
+              ? apply.applyDate.slice(0, 10)
+              : "无";
+          }
+          if (apply.professorId != null) {
+            this.activities[2].content =
+              apply.professorId != null ? "分配专家" : "未分配专家";
+            this.activities[2].timestamp = apply.professorDate
+              ? apply.professorDate.slice(0, 10)
+              : "无";
+          }
+          if (apply.checkStatus != null) {
+            this.activities[3].content =
+              apply.checkStatus == 1 ? "专家审核" : "专家未审核";
+            this.activities[3].timestamp = apply.checkDate
+              ? apply.checkDate.slice(0, 10)
+              : "无";
+          }
+        },
+        err => {}
+      );
+    }
+
     getItemByItemId(this.id).then(
       val => {
         this.item = val.data.data;
+
         getUserInfoById(this.item.authorId).then(
           val => {
             this.user = val.data.data;
+            if (this.user.username == this.StoreUser.username)
+              this.isShow = false;
+              else this.isShow = true;
           },
           error => {}
         );
@@ -129,12 +200,12 @@ export default {
       error => {}
     );
     getItemApplyStatusByItemId(this.id).then(
-          val => {
-            let result=val.data;
-             this.applyed=result.data;
-          },
-          error => {}
-        );
+      val => {
+        let result = val.data;
+        this.applyed = result.data;
+      },
+      error => {}
+    );
   }
 };
 </script>

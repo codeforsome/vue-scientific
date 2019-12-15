@@ -45,11 +45,15 @@ export const addItemApply=id=>http.get('/api/item/apply/add/'+id);
 
 export const getItemByUserId=(userId,params)=>http.get('/api/item/get/userid/'+userId,params);
 
+export const getItemByApplyUserId=(userId)=>http.get('/api/item/get/applyUserId/'+userId);
+
 export const getItemByItemId=(itemId,params)=>http.get('/api/item/get/'+itemId,params);
 
 export const updateItem=data=>http.post('/api/item/update',data);
 
 export const getItemApplyByItemId=(itemId,params)=>http.get('/api/item/apply/get/'+itemId,params);
+
+export const getItemApply=(itemId)=>http.get('/api/item/apply/user/get/'+itemId);
 
 
 export const getItemApplyStatusByItemId=(itemId)=>http.get('/api/item/apply/status/get/'+itemId);

@@ -4,7 +4,7 @@ Mock.mock('/api/login/verify', 'post', data => {
         msg: 'aaa',
         success: true,
         data: {
-            userType:1,
+            userType:0,
             userToken:33,
             user: {
                 id: '123',

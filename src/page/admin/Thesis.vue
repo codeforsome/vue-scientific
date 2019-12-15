@@ -1,6 +1,6 @@
 <template>
-    <div class="thesis-box">
-         <div class="table-box">
+  <div class="thesis-box">
+    <div class="table-box">
       <el-table :data="tableData" style="width: 100%">
         <el-table-column type="index" width="50"></el-table-column>
         <el-table-column label="创建日期" width="120">
@@ -19,14 +19,14 @@
             <span>{{tableData[scope.$index].abstracts.slice(0,30)+'...'}}</span>
           </template>
         </el-table-column>
-         <el-table-column label="论文文件">
+        <el-table-column label="论文文件">
           <template slot-scope="scope">
-              <a :href="tableData[scope.$index].filePath">点击下载论文</a>
+            <a :href="tableData[scope.$index].filePath">点击下载论文</a>
           </template>
         </el-table-column>
         <el-table-column label="操作" align="center">
-          <template slot-scope="scope" >
-              <el-button size="mini" type="danger" @click="handleDelete(scope.$index)">删除</el-button>
+          <template slot-scope="scope">
+            <el-button size="mini" type="danger" @click="handleDelete(scope.$index)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -42,18 +42,14 @@
         ></el-pagination>
       </div>
     </div>
-    <el-dialog
-      title="提示"
-      :visible.sync="deleteDialogVisible"
-      width="30%"
-    >
+    <el-dialog title="提示" :visible.sync="deleteDialogVisible" width="30%">
       <span>{{deleteTip}}</span>
       <span slot="footer" class="dialog-footer">
         <el-button @click="deleteDialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="deletItem">确 定</el-button>
       </span>
     </el-dialog>
-    </div>
+  </div>
 </template>
 <script>
 import {
@@ -64,7 +60,7 @@ import {
   searchThesis
 } from ".././../request/api";
 export default {
-     data() {
+  data() {
     return {
       deleteDialogVisible: false,
       deleteTip: "",
@@ -77,26 +73,31 @@ export default {
       }
     };
   },
+  watch: {
+    $route(to, from) {
+      this.$router.go(0);
+    }
+  },
   created() {
     let type = this.$route.params.type;
     let search = this.$route.params.search;
     if (type == 3 && search != "") {
-      this.tableData =[];
-	   this.userList=[];
-      searchThesis({type,search}).then(
+      this.tableData = [];
+      this.userList = [];
+      searchThesis({ type, search }).then(
         val => {
           let result = val.data;
           this.userPagination.total = result.data.length;
-          this.userPagination.pageSize=result.data.length;
-           this.tableData = result.data;
-		    for (let i = 0; i < this.tableData.length; i++) {
-          getUserInfoById(this.tableData[i].authorId).then(
-            val => {
-              this.userList.push(val.data.data);
-            },
-            error => {}
-          );
-        }
+          this.userPagination.pageSize = result.data.length;
+          this.tableData = result.data;
+          for (let i = 0; i < this.tableData.length; i++) {
+            getUserInfoById(this.tableData[i].authorId).then(
+              val => {
+                this.userList.push(val.data.data);
+              },
+              error => {}
+            );
+          }
         },
         err => {}
       );
@@ -135,7 +136,7 @@ export default {
       deleteThesisById({ id: this.tableData[this.choiceCurrent].id }).then(
         val => {
           this.deleteTip = "删除成功";
-		  window.location.href='/system/thesis';
+          window.location.href = "/system/thesis";
           setTimeout(() => {
             this.deleteDialogVisible = false;
           }, 1000);
@@ -160,7 +161,7 @@ export default {
       );
     }
   }
-}
+};
 </script>
 <style lang="less" scoped>
 .table-box {

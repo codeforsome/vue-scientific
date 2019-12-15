@@ -15,6 +15,8 @@ export default {
   })
   
   localStorage.getItem("storeState") && this.$store.replaceState(Object.assign(this.$store.state,JSON.parse(localStorage.getItem("storeState"))));
+
+  
  }
 }
 </script>

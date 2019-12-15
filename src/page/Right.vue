@@ -21,6 +21,21 @@
         </div>
       </div>
     </el-card>
+
+     <el-card class="box-card">
+      <div class="thesis-wrap">
+        <div class="top">
+          <span class="my-thesis">我已经申请的科研题目</span>
+        </div>
+        <div class="thesis-list">
+          <template v-for="(item,index) in items">
+             <div class="wrap">
+            <child-item :item="item" :key="index"></child-item>
+            </div>
+          </template>
+        </div>
+      </div>
+    </el-card>
      <el-dialog title="提示" :visible.sync="deleteDialogVisible" width="30%">
       <span>{{deleteTip}}</span>
       <span slot="footer" class="dialog-footer">
@@ -31,19 +46,33 @@
   </div>
 </template>
 <script>
-import { getThesisByParams ,userDeleteThesisById} from "./../request/api";
+import { getThesisByParams ,userDeleteThesisById,getItemByApplyUserId} from "./../request/api";
 import ThesisItem from "./../components/ThesisItem";
+import ChildItem from "./../components/ChildItem";
 export default {
-  components: { ThesisItem },
+  components: { ThesisItem,ChildItem},
   data() {
     return {
       thesisList: [],
+      items:[],
       deleteIndex:'',
       deleteDialogVisible:false,
       deleteTip:'',
     };
   },
+  computed: {
+    user() {
+      return this.$store.getters.user;
+    }
+  },
   created() {
+     getItemByApplyUserId(this.user.id).then(
+      val => {
+        let result = val.data;
+        this.items = result.data;
+      },
+      err => {}
+    );
     getThesisByParams("").then(
       val => {
         let result = val.data;

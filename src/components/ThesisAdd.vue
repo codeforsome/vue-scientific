@@ -94,36 +94,44 @@ export default {
       abstracts: "",
       disciplineSpecialtyList: [
         {
-          value: "互联网",
-          label: "互联网"
+          value: "哲学",
+          label: "哲学"
         },
         {
-          value: "金融",
-          label: "金融"
+          value: "经济学",
+          label: "经济学"
         },
         {
           value: "文学",
           label: "文学"
         },
         {
-          value: "创新",
-          label: "创新"
+          value: "政治学",
+          label: "政治学"
         },
         {
-          value: "工业技术",
-          label: "工业技术"
+          value: "行政学",
+          label: "行政学"
         },
         {
-          value: "电子工程与计算机",
-          label: "电子工程与计算机"
+          value: "数学",
+          label: "数学"
         },
          {
-          value: "环境",
-          label: "环境"
+          value: "物理学",
+          label: "物理学"
         },
          {
-          value: "政治",
-          label: "政治"
+          value: "计算机科学",
+          label: "计算机科学"
+        },
+          {
+          value: "环境学",
+          label: "环境学"
+        },
+         {
+          value: "艺术学",
+          label: "艺术学"
         }
       ],
       disciplineSpecialty: "",

@@ -74,7 +74,7 @@
         ></el-pagination>
       </div>
     </div>
-  
+
     <el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
       <span>{{passwordTip}}</span>
       <span slot="footer" class="dialog-footer">
@@ -147,23 +147,25 @@ export default {
     let type = this.$route.params.type;
     let search = this.$route.params.search;
     if (type == 1 && search != "") {
-      this.tableData =[];
-	  this.applyArray=[];
-	   this.userTypeArray=[];
-      searchUser({type,search}).then(
+      this.tableData = [];
+      this.applyArray = [];
+      this.userTypeArray = [];
+      searchUser({ type, search }).then(
         val => {
           let result = val.data;
           this.userPagination.total = result.data.length;
-          this.userPagination.pageSize=result.data.length;
-           this.tableData = result.data;
-		   for (let i = 0; i < this.tableData.length; i++) {
-          this.applyArray.push(this.tableData[i].status == 0 ? "禁用" : "正常");
-        }
-        for (let i = 0; i < this.tableData.length; i++) {
-          this.userTypeArray.push(
-            this.userTypeOptions[this.tableData[i].type].value
-          );
-        }
+          this.userPagination.pageSize = result.data.length;
+          this.tableData = result.data;
+          for (let i = 0; i < this.tableData.length; i++) {
+            this.applyArray.push(
+              this.tableData[i].status == 0 ? "禁用" : "正常"
+            );
+          }
+          for (let i = 0; i < this.tableData.length; i++) {
+            this.userTypeArray.push(
+              this.userTypeOptions[this.tableData[i].type].value
+            );
+          }
         },
         err => {}
       );
@@ -192,8 +194,11 @@ export default {
       err => {}
     );
   },
-  mounted(){
- 
+  mounted() {},
+  watch: {
+    $route(to, from) {
+      this.$router.go(0);
+    }
   },
   methods: {
     choice(index) {
@@ -230,7 +235,7 @@ export default {
       }).then(
         val => {
           this.deleteTip = "删除用户成功";
-		  window.location.href='/system/user';
+          window.location.href = "/system/user";
           setTimeout(() => {
             this.deleteDialogVisible = false;
           }, 1000);

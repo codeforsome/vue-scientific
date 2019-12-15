@@ -13,7 +13,6 @@
               </div>
               <div class="right">
                 <div class="top">
-                  <span class="hot">热门</span>
                   <span class="name">{{item.nickname}}</span>
                 </div>
                 <div class="bottom">
@@ -49,7 +48,7 @@
             </template>
           </div>
         </el-card>
-         <el-card  v-else class="box-card">
+        <el-card v-else class="box-card">
           <div class="hot-title">论文</div>
           <div>搜索结果没有内容。</div>
         </el-card>
@@ -61,7 +60,7 @@
             </template>
           </div>
         </el-card>
-         <el-card v-else class="box-card item-box">
+        <el-card v-else class="box-card item-box">
           <div class="hot-title">科研题目</div>
           <div>搜索结果没有内容。</div>
         </el-card>
@@ -83,20 +82,20 @@ export default {
     };
   },
   methods: {},
-  watch:{
-      '$route'(to,from){
-          this.$router.go(0);
-      }
+  watch: {
+    $route(to, from) {
+      this.$router.go(0);
+    }
   },
   mounted() {
-    searchUser({type:0, search: this.$route.params.search }).then(
+    searchUser({ type: 0, search: this.$route.params.search }).then(
       val => {
         let result = val.data;
         this.hotUser = result.data;
       },
       err => {}
     );
-    searchThesis({ type:0,search: this.$route.params.search }).then(
+    searchThesis({ type: 0, search: this.$route.params.search }).then(
       val => {
         let result = val.data;
         this.thesisList = result.data;
@@ -104,15 +103,14 @@ export default {
       err => {}
     );
 
-    searchItem({type:0, search: this.$route.params.search }).then(
+    searchItem({ type: 0, search: this.$route.params.search }).then(
       val => {
         let result = val.data;
         this.itemList = result.data;
       },
       err => {}
     );
-  },
- 
+  }
 };
 </script>
 <style lang="less" scoped>

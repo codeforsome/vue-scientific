@@ -133,8 +133,8 @@ export default {
           label: "会计学校"
         },
         {
-          value: "信息学院",
-          label: "信息学院"
+          value: "计算机学院",
+          label: "计算机学院"
         },
         {
           value: "旅游学校",
@@ -166,6 +166,10 @@ export default {
       ],
       sex: "",
       educationOptions: [
+         {
+          value: "专科",
+          label: "专科"
+        },
         {
           value: "本科",
           label: "本科"
@@ -178,13 +182,13 @@ export default {
           value: "博士",
           label: "博士"
         },
+          {
+          value: "副教授",
+          label: "副教授"
+        },
         {
           value: "教授",
           label: "教授"
-        },
-        {
-          value: "副教授",
-          label: "副教授"
         }
       ],
       education: "",
